@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   	<head th:replace="fragments/fragment :: assets" />
+    <body>
+	    <div th:replace="fragments/fragment :: header"></div>
+	    <h2 th:text=" 'Login as ' + ${#httpServletRequest.remoteUser}">Login as</h2>
+	    <form th:action="@{/logout}" method="post">
+	    	<input type="submit" value="Sign Out" />
+	    </form>
+	    <hr />
+        <h1>All Students</h1>
+        <table id="studentTable" class="display" style="width:100%">
+        	<thead>
+        	    <tr>
+	        		<th>No.</th>
+	        		<th>NPM</th>
+	        		<th>Name</th>
+	        		<th>GPA</th>
+	        		<th>Status</th>
+	        		<th></th>
+	        		<th></th>
+	        	</tr>
+        	</thead>
+        	<tbody>
+        		<tr th:each="student,iterationStatus: ${students}">
+        			<td th:text="${iterationStatus.count}"></td>
+        			<td th:text="${student.npm}"></td>
+        			<td th:text="${student.name}"></td>
+        			<td th:text="${student.gpa}"></td>
+        			<td th:text="${student.gpa>=3.49 ? 'Cum Laude!' : 'Sangat Memuaskan!'}"></td>
+        			<td><a th:href="'/student/delete/' + ${student.npm}">Delete Data</a></td>
+        			<td><a th:href="'/student/update/' + ${student.npm}">Update Data</a></td>
+        		</tr>
+        	</tbody>
+        </table>
+       	<div th:replace="fragments/fragment :: footer"></div>
+    </body>
+</html>
